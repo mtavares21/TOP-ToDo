@@ -1,5 +1,6 @@
+/* eslint-disable max-len */
 import {formDriver, taskFactory} from './factory';
-import {lineCounter, colCounter} from './controller';
+import {lineCounter, findTask, colCounter, counterLines} from './controller';
 import High from './images/higth.png';
 import Medium from './images/medium.png';
 import Low from './images/low.png';
@@ -102,7 +103,7 @@ const element = (() => {
     title.type = 'text';
     title.value = text;
     // eslint-disable-next-line max-len
-    title.addEventListener('blur', () =>localStorage.setItem(`section${id}`, `${title.value}`));
+    title.addEventListener('blur', () =>localStorage.setItem(`section${title.id[0]}`, `${title.value}`));
     const parent = document.getElementById(appendTo);
     parent.appendChild(title);
   };
@@ -124,7 +125,7 @@ const element = (() => {
     input.value = text;
     input.setAttribute('readOnly', 'true');
     const parent = document.getElementById(appendTo);
-    add.eve
+    add.eve;
     parent.appendChild(input);
   };
 
@@ -134,9 +135,11 @@ const element = (() => {
       input.id = id;
     }
     input.classList = 'btnCheck';
+    input.type = 'button';
     input.style.backgroundImage = `url(${img})`;
     const parent = document.getElementById(appendTo);
     parent.appendChild(input);
+    return input;
   };
 
   const input = (id, appendTo, type, classList, name, checked) => {
@@ -186,6 +189,7 @@ const element = (() => {
     text.cols = 20;
     const parent = document.getElementById(appendTo);
     parent.appendChild(text);
+    return text;
   };
 
   // Add new project
@@ -214,7 +218,6 @@ const element = (() => {
   };
 
   // Add task or section button
-
   const addTask = (col, appendTo) => {
     const button = document.createElement('input');
     button.id = col + '*';
@@ -233,6 +236,24 @@ const element = (() => {
     button.classList = 'addSection';
     const parent = document.getElementById('newSectionWrapper');
     parent.appendChild(button);
+    let counter = colCounter();
+    button.addEventListener('click', function() {
+      localStorage.setItem(`section${counter}`, 'No title');
+      counter++;
+    });
+  };
+
+  const deleteButton = (index, appendTo) => {
+    const delButton = document.createElement('button');
+    delButton.classList = 'delButton';
+    delButton.innerText = 'X';
+    delButton.addEventListener('click', () => {
+      const task = taskFactory(Object.values(findTask(index)));
+      task.removeTask();
+      location.reload();
+    });
+    const parent = document.getElementById(appendTo);
+    parent.appendChild(delButton);
   };
 
   return {
@@ -248,6 +269,7 @@ const element = (() => {
     formSubmit,
     addSection,
     addTask,
+    deleteButton,
   };
 })();
 
@@ -256,13 +278,14 @@ const element = (() => {
 const compose = (() => {
   const newSection = (col, appendTo, title) => {
     wrapper.section(`${col}sectionWrapper`, appendTo);
-    element.sectionTitle(col, `${col}sectionWrapper`, 'New Section');
+    element.sectionTitle(`${col}`, `${col}sectionWrapper`, 'New Section');
     wrapper.savedSection(`${col}savedSection`, `${col}sectionWrapper`);
     element.addTask(`${col}`, `${col}sectionWrapper`);
     const addTask = document.getElementById(`${col}*`);
     addTask.id = `${col}*${lineCounter()}`;
-    addTask.addEventListener( 'click', () => 
-      compose.newTask(col, `${col}sectionWrapper`));
+    addTask.addEventListener( 'click', () =>
+      compose.newTask(`${col}`, `${col}sectionWrapper`));
+    // localStorage.setItem(`section${col}`, 'New Section');
   };
 
   const savedTask = (col, appendTo, title, schedule, priority) => {

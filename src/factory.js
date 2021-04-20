@@ -64,7 +64,12 @@ const taskProto = {
         },
     );
   },
-  removeTask: function() {},
+  removeTask: function() {
+    localStorage.removeItem(`${this.index}title`, `${this.title}`);
+    localStorage.removeItem(`${this.index}schedule`, `${this.schedule}`);
+    localStorage.removeItem(`${this.index}priority`, `${this.priority}`);
+    localStorage.removeItem(`${this.index}notes`, `${this.notes}`);
+  },
 };
 
 const taskFactory = (values) => {

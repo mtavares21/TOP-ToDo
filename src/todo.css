@@ -117,12 +117,15 @@ padding: 10px;
 justify-content: space-around;
 justify-self: center;
 justify-items: center;
-align-items: center;
-transition: ease-out;
+align-items: start;
+transition: 3s ease-in-out;
 }
+
 .buttonsWrapper{
 display:flex;
 flex-wrap: wrap;
+justify-items: center;
+justify-content: center;
 width: 30px;
 margin: 0px;
 }
@@ -131,9 +134,13 @@ appearance: none;
 background-image: url("../src/images/low.png");
 background-size: contain;
 background-repeat: no-repeat;
-width: 20px;
-height: 20px;
+width: 16px;
+height: 16px;
 border-style: none;
+margin-top: 4px;
+margin-bottom: 2px;
+outline: none;
+transition: 0.1s ease-out;
 }
 .savedTitleWrapper{
 display: flex;
@@ -161,12 +168,16 @@ outline: none;
 }
 .descriptionWrapper{
 width:200px;
+display: flex;
+flex-wrap: wrap;
+align-items: flex-start;
+align-content: flex-start;
 }
 .descriptionWrapper input{
 appearance: none;
 border-style: none;
 font-family: 'Lato', sans-serif;
-font-size: 15px;
+font-size: 14 px;
 margin-left:10px
 }
 
@@ -180,6 +191,7 @@ border-color: #b8b8bd;
 padding: 20px;
 height: fit-content;
 margin-bottom: 20px;
+flex-wrap: ;
 }
 .formWrapper{
 display: flex;
@@ -203,9 +215,11 @@ margin-right:100% ;
 font-family: 'Lato', sans-serif;
 font-size: 12px;
 width: 200px;
+transition: 3s ease-in-out;
 }
 .formNotes{
-width:85%;
+width:200px;
+margin-left:;
 overflow:scroll;
 margin-top: 5px;
 align-content: start;
@@ -216,6 +230,7 @@ align-content: start;
   background-color: rgb(202,225,109);
   border-radius: 5px;
   margin-top: 15px;
+  margin-right: 100%;
   color: black;
   padding: 10px;
   font-family: 'Lato', sans-serif;
@@ -302,6 +317,16 @@ vertical-align: center;
 }
 
 .savedNotes{
-margin-right: 72%;
-
+margin-right: 105px;
+margin-top: 0px;
+}
+.delButton{
+appearance: none;
+width: 20px;
+height: 20px;
+border-radius: 50%;
+font-size: 10px;
+background-color: rgb(247, 113, 113);
+border: none;
+color:rgb(10, 10, 10);
 }
