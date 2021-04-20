@@ -71,7 +71,7 @@ const taskFactory = (values) => {
   return Object.assign(Object.create(taskProto), {
     index: values[0],
     title: values[1],
-    shedule: values[2],
+    schedule: values[2],
     priority: values[3],
     notes: values[4],
   });

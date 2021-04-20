@@ -70,9 +70,15 @@ width:100px;
 display:flex;
 width: fit-content;
 justify-content: start;
+flex-wrap: nowrap;
 align-content: start;
 align-self: start;
 align-items: start;
+flex-direction: row;
+}
+#newSectionWrapper{
+display: flex;
+
 }
 .sectionWrapper{
 width: 300px;
@@ -112,6 +118,7 @@ justify-content: space-around;
 justify-self: center;
 justify-items: center;
 align-items: center;
+transition: ease-out;
 }
 .buttonsWrapper{
 display:flex;
@@ -144,6 +151,13 @@ width:30px;
 }
 .savedInput{
 width: 100px;
+appearance: none;
+border: none;
+}
+.savedInput:focus-visible{
+appearance: none;
+border: none;
+outline: none;
 }
 .descriptionWrapper{
 width:200px;
@@ -191,7 +205,7 @@ font-size: 12px;
 width: 200px;
 }
 .formNotes{
-width:100%;
+width:85%;
 overflow:scroll;
 margin-top: 5px;
 align-content: start;
@@ -279,10 +293,15 @@ padding-top: 0px;
 padding-right: 8px;
 padding-left: 8px;
 padding-bottom: 0px;
-margin-top: 58px;
+margin-top: 75px;
 margin-right: 100%;
 text-align: center;
 vertical-align: center;
 
+
+}
+
+.savedNotes{
+margin-right: 72%;
 
 }

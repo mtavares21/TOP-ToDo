@@ -1,9 +1,9 @@
 import {formDriver, taskFactory} from './factory';
-import {counterLines} from './controller';
+import {lineCounter, colCounter} from './controller';
 import High from './images/higth.png';
 import Medium from './images/medium.png';
 import Low from './images/low.png';
-// All needed wrappers
+import {add} from 'date-fns';// All needed wrappers
 const wrapper = (() => {
   // New Section Wrapper
   const section = (id, appendTo) => {
@@ -27,6 +27,7 @@ const wrapper = (() => {
     const saved = document.createElement('div');
     saved.id = id;
     saved.classList = 'savedWrapper';
+    saved.setAttribute('readOnly', 'true');
     parent.appendChild(saved);
   };
 
@@ -50,6 +51,7 @@ const wrapper = (() => {
     const savedTitle = document.createElement('div');
     savedTitle.id = id;
     savedTitle.classList = 'savedTitleWrapper';
+    savedTitle.setAttribute('readonly', 'true');
     const parent = document.getElementById(appendTo);
     parent.appendChild(savedTitle);
   };
@@ -99,6 +101,8 @@ const element = (() => {
     title.classList = 'sectionTitle';
     title.type = 'text';
     title.value = text;
+    // eslint-disable-next-line max-len
+    title.addEventListener('blur', () =>localStorage.setItem(`section${id}`, `${title.value}`));
     const parent = document.getElementById(appendTo);
     parent.appendChild(title);
   };
@@ -118,7 +122,9 @@ const element = (() => {
     input.type = 'text';
     input.classList = 'savedInput';
     input.value = text;
+    input.setAttribute('readOnly', 'true');
     const parent = document.getElementById(appendTo);
+    add.eve
     parent.appendChild(input);
   };
 
@@ -200,6 +206,7 @@ const element = (() => {
     const form = document.getElementById(appendTo);
     dropButton.addEventListener('click', () => {
       const task = taskFactory(formDriver(form));
+      console.log(task);
       task.save();
     });
     const parent = document.getElementById(appendTo);
@@ -214,29 +221,17 @@ const element = (() => {
     button.value = '+';
     button.type = 'button';
     button.classList = 'addTask';
-    button.addEventListener('click', () => counterLines(button));
-    button.addEventListener('click', () =>
-      compose.newTask(`${button.id}form`, `${col}savedSection`),
-    );
     const parent = document.getElementById(appendTo);
     parent.appendChild(button);
   };
 
-  const addSection = (col, appendTo) => {
+  const addSection = () => {
     const button = document.createElement('input');
-    button.id = `${parseInt(col)}addSection`;
+    button.id = 'addSection';
     button.value = '+';
     button.type = 'button';
     button.classList = 'addSection';
-    button.addEventListener('click', () => {
-      const section = document.getElementById(`${parseInt(col)}sectionWrapper`);
-      section.remove();
-      compose.newSection(col, `allSectionsWrapper`, 'New Section');
-      addTask(col, `${parseInt(col)}sectionWrapper`);
-      compose.newSection(`${parseInt(col) + 1}`, 'allSectionsWrapper', '');
-      addSection(`${parseInt(col) + 1}`, `${parseInt(col) + 1}sectionWrapper`);
-    });
-    const parent = document.getElementById(appendTo);
+    const parent = document.getElementById('newSectionWrapper');
     parent.appendChild(button);
   };
 
@@ -261,10 +256,13 @@ const element = (() => {
 const compose = (() => {
   const newSection = (col, appendTo, title) => {
     wrapper.section(`${col}sectionWrapper`, appendTo);
-    if (title != '') {
-      element.sectionTitle(`${col}sectionTitle`, `${col}sectionWrapper`, title);
-      wrapper.savedSection(`${col}savedSection`, `${col}sectionWrapper`);
-    }
+    element.sectionTitle(col, `${col}sectionWrapper`, 'New Section');
+    wrapper.savedSection(`${col}savedSection`, `${col}sectionWrapper`);
+    element.addTask(`${col}`, `${col}sectionWrapper`);
+    const addTask = document.getElementById(`${col}*`);
+    addTask.id = `${col}*${lineCounter()}`;
+    addTask.addEventListener( 'click', () => 
+      compose.newTask(col, `${col}sectionWrapper`));
   };
 
   const savedTask = (col, appendTo, title, schedule, priority) => {
@@ -292,7 +290,7 @@ const compose = (() => {
         `${col}savedTitleLabel`,
         `${col}savedTitle`,
         `${col}savedTitleInput`,
-        'Title',
+        'Title:',
     );
     element.savedInput(`${col}savedTitleInput`, `${col}savedTitle`, title);
     wrapper.savedShedule(`${col}savedShedule`, `${col}descriptionWrapper`);
@@ -301,7 +299,7 @@ const compose = (() => {
         `${col}savedScheduleLabel`,
         `${col}savedShedule`,
         `${col}savedScheduleInput`,
-        'Schedule',
+        'Schedule:',
     );
     // eslint-disable-next-line max-len
     element.savedInput(
@@ -312,11 +310,11 @@ const compose = (() => {
   };
 
   const newTask = (col, appendTo) => {
-    wrapper.newTask(col, appendTo);
-    const subcol = parseInt(col) + 1;
-    wrapper.newForm(`${subcol}`, col);
-    const formcol = `${col}f`;
-    element.newForm(`${formcol}`, subcol);
+    wrapper.newTask(`${col}*${lineCounter(col)}w`, appendTo);
+    const subcol = `${col}*${lineCounter(col)}fw`;
+    wrapper.newForm(`${subcol}`, `${col}*${lineCounter(col)}w`);
+    const formcol = `${col}*${lineCounter(col)}f`;
+    element.newForm(`${formcol}`, `${subcol}`);
 
     element.newLabelTitle('', formcol, '', 'New Task');
     element.input('', formcol, 'text', 'formInput');
