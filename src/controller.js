@@ -21,6 +21,7 @@ const newSection = () => {
     }
   });
 };
+// Counters based on LocalStorage
 function lineCounter(col) {
   const keys = Object.keys(localStorage).filter((item) => item[0] != 's');
   const filterCol = keys.filter((item) => item[0] === col);
@@ -40,8 +41,7 @@ function colCounter() {
     return Math.max(...colArray)+1;
   };
 }
-
-// find unique indexes in database
+// Find unique indexes in database
 function searchKeys() {
   const data = [...Object.keys(localStorage).filter((item) => item[0] != 's')];
 
@@ -56,7 +56,7 @@ function searchKeys() {
   return unique;
 }
 
-// display objects with correct index
+// Find task in local storage based on index
 const findTask = function(index) {
   const search = (key) => {
     const regex = new RegExp(/[a-zA-Z]/);
@@ -187,21 +187,19 @@ const editTask = () => {
     element.deleteButton(index, `${index}savedWrapper`);
   }
 };
-// Counter to map lines
-const counterLines = (element) => {
-  const id = element.id;
-  const lineIndex = id.indexOf('*') + 1;
-  const line = id.slice(lineIndex);
-  if (line === '') {
-    element.id = id + 0;
-  } else {
-    element.id = id.replace(`*${line}`, `*${parseInt(line) + 1}`);
-  }
-};
+
+/* Notes:
+Some controller logic, witch should be here, is in dom.js, this is NOT OK!
+For now it will stay like this, but at some point i should change DOM functions so that
+they return their basic objects to work with instead of just setting them up on the document,
+by doing this i would be a lot easiar to maintain a separation of responsabilites.
+The dom.js file shoul only create the elements, the eventListners should be added in another module,
+the controller module, for example.
+*/
+
 export {
   newSection,
   lineCounter,
-  counterLines,
   searchKeys,
   findTask,
   colCounter,

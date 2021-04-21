@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {formDriver, taskFactory} from './factory';
-import {lineCounter, findTask, colCounter, counterLines} from './controller';
+import {lineCounter, findTask, colCounter} from './controller';
 import High from './images/higth.png';
 import Medium from './images/medium.png';
 import Low from './images/low.png';
