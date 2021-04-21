@@ -6,12 +6,13 @@ import {compose} from './dom';
 // On load, create necessary Todos based on Object.keys in localStorage
 // Sections
 function setSections() {
-  for (let i=0; i<=(colCounter()-1); i++) {
+  for (let i=0; i<colCounter(); i++) {
     compose.newSection(`${i}`, 'allSectionsWrapper', 'New Section');
   }
   const titles = Array.from(document.querySelectorAll('.sectionTitle'));
-  titles.map( (item, index) =>
-    item.value = localStorage.getItem(`section${index}`));
+  titles.map( (item) =>{
+    item.value = localStorage.getItem(`section${item.id}`);
+  })
 }
 // Tasks
 function setTasks() {

@@ -103,7 +103,7 @@ const element = (() => {
     title.type = 'text';
     title.value = text;
     // eslint-disable-next-line max-len
-    title.addEventListener('blur', () =>localStorage.setItem(`section${colCounter()}`, `${title.value}`));
+    title.addEventListener('blur', () =>localStorage.setItem(`section${title.id}`, `${title.value}`));
     const parent = document.getElementById(appendTo);
     parent.appendChild(title);
   };
