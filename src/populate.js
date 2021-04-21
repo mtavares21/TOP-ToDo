@@ -12,7 +12,7 @@ function setSections() {
   const titles = Array.from(document.querySelectorAll('.sectionTitle'));
   titles.map( (item) =>{
     item.value = localStorage.getItem(`section${item.id}`);
-  })
+  });
 }
 // Tasks
 function setTasks() {

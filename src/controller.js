@@ -27,6 +27,7 @@ function lineCounter(col) {
 }
 function colCounter() {
   const columns = Object.keys(localStorage)
+      .filter((item) => item[0] === 's')
       .map( (item) => {
         const regex = new RegExp(/(\d+)(?!.*\d)/);
         const col = regex.exec(item)[0];
