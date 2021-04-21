@@ -237,7 +237,7 @@ const element = (() => {
     const parent = document.getElementById('newSectionWrapper');
     parent.appendChild(button);
     button.addEventListener('click', function() {
-      localStorage.setItem(`section${colCounter()+1}`, 'No title');
+      localStorage.setItem(`section${parseInt(colCounter())+1}`, 'No title');
     });
   };
 
