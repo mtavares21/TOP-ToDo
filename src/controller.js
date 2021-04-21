@@ -8,16 +8,15 @@ import High from './images/higth.png';
 import Medium from './images/medium.png';
 import Low from './images/low.png';
 // Add necessary event listeners
-const newSection = () => {
+function newSection() {
   element.addSection();
   const button = document.getElementById('addSection');
   // How many sections are already saved?
-  let col = parseInt(colCounter());
   button.addEventListener('click', () => {
-    compose.newSection(col, 'allSectionsWrapper', 'New Section');
-    col++;
+    compose.newSection(`${colCounter()-1}`, 'allSectionsWrapper', 'New Section');
   });
-};
+}
+
 // Counters based on LocalStorage
 function lineCounter(col) {
   const keys = Object.keys(localStorage).filter((item) => item[0] != 's');
@@ -35,7 +34,13 @@ function colCounter() {
         return item;
       })
       .sort((a, b) => a-b);
-  return parseInt(columns.length-1);
+  const col = parseInt(columns.length);
+  console.log(col);
+  if (col === -1) {
+    return 0;
+  } else {
+    return col;
+  }
 }
 
 /*  if (colArray.length == 0 ) {

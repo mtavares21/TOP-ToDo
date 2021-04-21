@@ -6,7 +6,7 @@ import {compose} from './dom';
 // On load, create necessary Todos based on Object.keys in localStorage
 // Sections
 function setSections() {
-  for (let i=0; i<=colCounter(); i++) {
+  for (let i=0; i<=(colCounter()-1); i++) {
     compose.newSection(`${i}`, 'allSectionsWrapper', 'New Section');
   }
   const titles = Array.from(document.querySelectorAll('.sectionTitle'));
