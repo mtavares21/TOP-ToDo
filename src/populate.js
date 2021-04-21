@@ -1,23 +1,17 @@
 /* eslint-disable require-jsdoc */
 /* eslint-disable max-len */
-import {searchKeys, findTask} from './controller';
+import {searchKeys, findTask, colCounter} from './controller';
 import {compose} from './dom';
 
 // On load, create necessary Todos based on Object.keys in localStorage
 // Sections
 function setSections() {
-  const data = Object.keys(localStorage).sort();
-  data.filter((item) => item[0] === 's')
-      .map((item) => {
-        const lastIndex = item.length - 1;
-        const col = item[lastIndex];
-        const section = document.getElementById(`${item[lastIndex]}sectionWrapper`);
-        if (!section) {
-          compose.newSection(`${item[lastIndex]}`, 'allSectionsWrapper', 'Section Title');
-        };
-        const title = document.getElementById(col);
-        title.value = localStorage.getItem(item);
-      });
+  for (let i=0; i<=colCounter(); i++) {
+    compose.newSection(`${i}`, 'allSectionsWrapper', 'New Section');
+  }
+  const titles = Array.from(document.querySelectorAll('.sectionTitle'));
+  titles.map( (item, index) =>
+    item.value = localStorage.getItem(`section${index}`));
 }
 // Tasks
 function setTasks() {

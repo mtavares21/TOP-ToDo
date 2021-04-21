@@ -103,7 +103,7 @@ const element = (() => {
     title.type = 'text';
     title.value = text;
     // eslint-disable-next-line max-len
-    title.addEventListener('blur', () =>localStorage.setItem(`section${title.id[0]}`, `${title.value}`));
+    title.addEventListener('blur', () =>localStorage.setItem(`section${colCounter()}`, `${title.value}`));
     const parent = document.getElementById(appendTo);
     parent.appendChild(title);
   };
@@ -236,10 +236,8 @@ const element = (() => {
     button.classList = 'addSection';
     const parent = document.getElementById('newSectionWrapper');
     parent.appendChild(button);
-    let counter = colCounter();
     button.addEventListener('click', function() {
-      localStorage.setItem(`section${counter}`, 'No title');
-      counter++;
+      localStorage.setItem(`section${colCounter()+1}`, 'No title');
     });
   };
 

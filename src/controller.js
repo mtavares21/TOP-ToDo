@@ -16,9 +16,6 @@ const newSection = () => {
   button.addEventListener('click', () => {
     compose.newSection(col, 'allSectionsWrapper', 'New Section');
     col++;
-    if (col == 10) {
-      button.remove();
-    }
   });
 };
 // Counters based on LocalStorage
@@ -30,17 +27,23 @@ function lineCounter(col) {
   return lines;
 }
 function colCounter() {
-  const colArray = [];
-  Object.keys(localStorage)
-      .sort()
-      .filter( (item) => item[0] === 's')
-      .map( (item) => colArray.push(item[parseInt(item.length)-1]) );
-  if (colArray.length == 0 ) {
+  const columns = Object.keys(localStorage)
+      .map( (item) => {
+        const regex = new RegExp(/(\d+)(?!.*\d)/);
+        const col = regex.exec(item)[0];
+        item = parseInt(col);
+        return item;
+      })
+      .sort((a, b) => a-b);
+  return parseInt(columns.length-1);
+}
+
+/*  if (colArray.length == 0 ) {
     return 0;
   } else {
     return Math.max(...colArray)+1;
   };
-}
+}*/
 // Find unique indexes in database
 function searchKeys() {
   const data = [...Object.keys(localStorage).filter((item) => item[0] != 's')];
@@ -88,8 +91,8 @@ const setSectionTitle = () => {
   data
       .filter((item) => item[0] === 's')
       .map((item) => {
-        const lastIndex = item.length-1;
-        const col = item[lastIndex];
+        const regex = new RegExp(/(\d+)(?!.*\d)/);
+        const col = regex.exec(item)[0];
         const title = document.getElementById(col);
         title.value = localStorage.getItem(item);
       });
