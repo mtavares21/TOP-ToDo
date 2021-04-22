@@ -19,3 +19,5 @@ Save and display all content correctly.
 
 Get a queue where you cant sort tasks by section, priority, date, etc.
 Create diferent projects: one Fridge for each of them.
+
+Show Git to Luis
