@@ -19,12 +19,7 @@ Save and display all content correctly.
 
 Get a queue where you cant sort tasks by section, priority, date, etc.
 Create diferent projects: one Fridge for each of them.
-<<<<<<< HEAD
-
-Show Git to Luis
-=======
-Delete section option.
 
 Live preview:
 https://mtavares21.github.io/TOP-ToDo/
->>>>>>> 2411119c8e3b43c8d9c805237da96fa9d69be49b
+
