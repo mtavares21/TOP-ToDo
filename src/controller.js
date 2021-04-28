@@ -36,7 +36,6 @@ function colCounter() {
       })
       .sort((a, b) => a-b);
   const col = parseInt(columns.length);
-  console.log(col);
   if (col === -1) {
     return 0;
   } else {
